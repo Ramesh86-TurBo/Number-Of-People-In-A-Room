@@ -49,6 +49,3 @@ Overall, the project provides a user-friendly interface to estimate the number o
 3. Social distancing: Enforce distancing measures by alerting when the number of people exceeds limits.
 4. Retail analytics: Analyze customer traffic, queue lengths, and behavior to optimize store layouts and operations.
 5. Security and surveillance: Detect unauthorized individuals, count people in restricted areas, and enhance security measures.
-
-4)future improvements:
-
