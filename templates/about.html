@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<!-- about section -->
+
+<div class="container my-5 p-5 border border-info rounded">
+
+  <h1 class="display-4 text-center"><b>About</b></h1>
+  <p class="mt-5">
+
+  <h3>Overview:</h3>
+  <p>The "Number of People in a Room Classroom Monitoring System" is a web application that helps you keep track of how
+    many people are present in a classroom or a room by using a video feed. The system detects faces in the video and
+    shows you the real-time count of people. You can create a classroom, enter the IP address and port for the video
+    feed, and see the live video along with the face count.</p>
+
+  <h3>Tech Stack:</h3>
+  <ul>
+    <li>Flask: Flask is a lightweight web framework written in Python. It is used to handle routing, rendering HTML
+      templates, and managing the backend logic of the application.</li>
+    <li>OpenCV: OpenCV (Open Source Computer Vision Library) is a popular library for computer vision tasks. In this
+      project, OpenCV is used to process the video feed, detect faces in each frame, and calculate the count of people.
+    </li>
+    <li>HTML/CSS: HTML (Hypertext Markup Language) is used to structure the web pages, and CSS (Cascading Style Sheets)
+      is used for styling and layout of the pages. HTML templates are rendered by Flask to display the different pages
+      of the web application.</li>
+  </ul>
+
+  <h3>Code Overview:</h3>
+  <ol>
+    <li>Flask Setup: The project uses the Flask web framework to handle the backend logic and routing. It imports the
+      necessary libraries and sets up the Flask application.</li>
+    <li>HTML Templates: The project includes HTML templates for different pages like the home page, classroom creation
+      page, about page, and the page displaying the video feed and face count. These templates define the structure and
+      layout of the web pages.</li>
+    <li>Video Processing: The detect_bounding_box function takes a video frame and performs face detection using OpenCV.
+      It converts the frame to grayscale, applies a pre-trained face classifier, and draws bounding boxes around the
+      detected faces. It also counts the number of people detected.</li>
+    <li>Real-time Video Feed: The generate_frames function reads frames from the video feed and passes each frame to the
+      detect_bounding_box function for processing. It then converts the processed frame to JPEG format and yields it as
+      a response. This allows the video feed to be streamed in real-time to the web page.</li>
+    <li>Web Routes: The Flask app defines several routes:
+      <ul>
+        <li>The home route (/) renders the index.html template for the home page.</li>
+        <li>The /video_feed route takes the IP address of the video feed as a parameter and returns the video frames as
+          a response.</li>
+        <li>The /stop_feed route is called when the user wants to stop the video feed.</li>
+        <li>The /count route is called via AJAX requests to get the latest face count.</li>
+        <li>The /classroom route handles the creation of a classroom and displays the classroom creation form.</li>
+        <li>The /about route renders the about.html template for the about page.</li>
+      </ul>
+    </li>
+    <li>JavaScript for Real-time Updates: The JavaScript code included in the HTML template is responsible for
+      periodically sending AJAX requests to the server to get the latest face count. It updates the face count
+      dynamically on the web page.</li>
+  </ol>
+
+  <h3>Faced Problems and Solutions:</h3>
+  <ul>
+    <li>Problem: The `ip_address` variable in the `video_feed` route was getting a value of None.</li>
+    <li>Solution: The HTML code was modified to include the IP address as a part of the URL when making a request to the
+      `/video_feed` route. This ensured that the `ip_address` value was correctly received by the server.</li>
+  </ul>
+
+  <h3>Future Improvements:</h3>
+  <ol>
+    <li>User Authentication: Add a login system to make sure only authorized users can create classrooms and monitor
+      them.</li>
+    <li>Support Multiple Classrooms: Allow users to create and manage multiple classrooms simultaneously.</li>
+    <li>Historical Data and Analytics: Store and analyze data about classroom occupancy over time. Provide reports and
+      visualizations to understand usage patterns.</li>
+    <li>Alerts and Notifications: Notify users when the number of people exceeds a limit or when unusual activity is
+      detected.</li>
+    <li>Improved Face Detection: Explore advanced face detection techniques for better accuracy and performance.</li>
+    <li>Responsive Design: Make the web interface work well on different devices, like smartphones and tablets.</li>
+    <li>Integration with Other Systems: Connect the classroom monitoring system with other systems or platforms, such as
+      attendance management or home automation systems.</li>
+  </ol>
+
+  <p>By adding these improvements, the project can become more powerful, secure, and user-friendly. It will provide more
+    features and an enhanced experience for users.</p>
+
+  </p>
+
+</div>
+
+{% endblock body %}

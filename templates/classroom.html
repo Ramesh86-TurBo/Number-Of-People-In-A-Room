@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<!-- create classroom -->
+
+<form class="container border border-dark rounded my-5 p-5" method="post" action="{{ url_for('classroom')  }}">
+  <h1 class="text-center">Create Classroom</h1>
+  <div class="mb-3 mt-3">
+    <label for="ip" class="form-label">Enter IP Address And PORT:</label>
+    <input type="text" class="form-control" id="ip" placeholder="Enter IP Address And PORT" name="ip">
+  </div>
+  <button type="submit" class="btn btn-dark" value="submit" id="btn1">Create</button>
+  <button type="button" class="btn btn-dark" id="btn3" onclick="hidefeed()">Hide Video</button>
+  <button type="button" class="btn btn-dark" id="btn2" onclick="stopfeed()">Kill Process</button>
+</form>
+
+<!-- real-time data display -->
+
+<div class="container border border-dark rounded my-5 p-5 text-center" id="todocont">
+
+  <!-- real-time face-counting -->
+
+  <h1 class="mt-5">Data</h1>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>IP Address And PORT</th>
+        <th>Number Of People In Room</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ ip_address }}</td>
+        <td id="count">0</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- real-time video-feed -->
+
+  <h1 class="mt-5">{{ var2 }}</h1>
+
+  {% if ip_address %}
+  <!-- <img class="mt-3 rounded" src="{{ url_for('video_feed')}}" id="videoFeed" alt="cctvfotage" width="50%"> -->
+  <img class="mt-3 rounded" src="{{ url_for('video_feed', ip=ip_address)}}" id="videoFeed" alt="cctvfotage" width="50%">
+  {% endif %}
+
+</div>
+
+<script>
+
+  // Showing or Hiding video-feed
+
+  function hidefeed() {
+    var live_feed = document.getElementById('videoFeed')
+    var btn3 = document.getElementById('btn3')
+
+    if (live_feed.style.display == "none") {
+      live_feed.style.display = "block";
+      live_feed.style.marginLeft = "auto";
+      live_feed.style.marginRight = "auto"
+      btn3.innerHTML = "Hide Video"
+    }
+    else {
+      live_feed.style.display = "none";
+      btn3.innerHTML = "Show Video"
+    }
+  }
+
+  // to stoplive feed / kill the opencv process
+
+  function stopfeed() {
+
+    fetch('/stop_feed')
+      .then(response => {
+        if (response.ok) {
+          console.log('feed stopped!')
+        }
+        else {
+          console.log('error stopping feed!')
+        }
+      })
+      .catch(error => {
+        console.log('Error stopping feed: ', error)
+      })
+
+  }
+
+  // ajax requesting for lve count
+
+  function updatecount() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById('count').innerHTML = this.responseText;
+      }
+    };
+    xhttp.open('GET', '/count', true);
+    xhttp.send()
+
+    // Update the video feed source with the IP address
+
+    var videoFeed = document.getElementById('videoFeed');
+    if (videoFeed) {
+      videoFeed.src = "{{ url_for('video_feed', ip=ip_address)}}";
+    }
+  }
+  setInterval(updatecount, 500)
+
+</script>
+
+{% endblock body %}
