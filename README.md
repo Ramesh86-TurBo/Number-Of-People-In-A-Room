@@ -42,3 +42,13 @@ Overall, the project provides a user-friendly interface to estimate the number o
     - "/count" to retrieve the current count of people.
 12. The script runs the Flask application on port 8000 in debug mode.
     - This ensures the application is accessible and facilitates debugging if needed.
+   
+3) Where can this be used?
+1. Crowd management: Monitor crowd density in shopping malls, stadiums, etc., to ensure safety and manage flow.
+2. Occupancy monitoring: Track room occupancy in buildings for resource optimization and scheduling.
+3. Social distancing: Enforce distancing measures by alerting when the number of people exceeds limits.
+4. Retail analytics: Analyze customer traffic, queue lengths, and behavior to optimize store layouts and operations.
+5. Security and surveillance: Detect unauthorized individuals, count people in restricted areas, and enhance security measures.
+
+4)future improvements:
+
